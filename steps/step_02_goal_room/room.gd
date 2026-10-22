@@ -1,0 +1,24 @@
+extends Node3D
+## A room module: a CSG shell with two connection points and a door at the exit.
+## The goal room has no exit, so it gets no door.
+
+const Door := preload("door.gd")
+const DoorScene := preload("door.tscn")
+
+var door: Door ## Null in the goal room.
+
+@onready var entrance: Marker3D = $Entrance
+@onready var exit: Marker3D = get_node_or_null("Exit") as Marker3D ## Null in the goal room.
+@onready var inside: Area3D = $Inside
+
+func _ready() -> void:
+	if exit == null:
+		return
+	door = DoorScene.instantiate() as Door
+	door.transform = exit.transform
+	add_child(door)
+
+## Room 0 has nothing behind it, so its entrance becomes a plain wall.
+## A hidden cutter is ignored by the CSG shape, which closes the hole.
+func seal_entrance() -> void:
+	$Shell/WallEntrance/Opening.visible = false

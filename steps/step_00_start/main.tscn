@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://steps/step_00_start/level.gd" id="1_level"]
+
+[ext_resource type="Script" path="res://steps/step_00_start/debug_map.gd" id="2_map"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sky"]
+ground_bottom_color = Color(0.38, 0.42, 0.47, 1)
+ground_horizon_color = Color(0.62, 0.66, 0.7, 1)
+
+[sub_resource type="Sky" id="Sky_main"]
+sky_material = SubResource("ProceduralSkyMaterial_sky")
+
+[sub_resource type="Environment" id="Environment_main"]
+background_mode = 2
+sky = SubResource("Sky_main")
+ambient_light_source = 2
+ambient_light_color = Color(0.75, 0.76, 0.78, 1)
+ambient_light_energy = 1.0
+
+[node name="Main" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_main")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.81915206, 0.46984634, -0.32898995, 0, 0.57357645, 0.81915206, 0.57357645, -0.6710101, 0.46984634, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_max_distance = 300.0
+
+[node name="Level" type="Node3D" parent="."]
+script = ExtResource("1_level")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="DebugMap" type="Control" parent="HUD" node_paths=PackedStringArray("level")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 316.0
+offset_bottom = 316.0
+clip_contents = true
+mouse_filter = 2
+script = ExtResource("2_map")
+level = NodePath("../../Level")

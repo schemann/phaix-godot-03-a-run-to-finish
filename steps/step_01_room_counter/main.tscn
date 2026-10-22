@@ -1,0 +1,69 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://steps/step_01_room_counter/level.gd" id="1_level"]
+
+[ext_resource type="Script" path="res://steps/step_01_room_counter/debug_map.gd" id="2_map"]
+
+[ext_resource type="Script" path="res://steps/step_01_room_counter/hud.gd" id="3_hud"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sky"]
+ground_bottom_color = Color(0.38, 0.42, 0.47, 1)
+ground_horizon_color = Color(0.62, 0.66, 0.7, 1)
+
+[sub_resource type="Sky" id="Sky_main"]
+sky_material = SubResource("ProceduralSkyMaterial_sky")
+
+[sub_resource type="Environment" id="Environment_main"]
+background_mode = 2
+sky = SubResource("Sky_main")
+ambient_light_source = 2
+ambient_light_color = Color(0.75, 0.76, 0.78, 1)
+ambient_light_energy = 1.0
+
+[node name="Main" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_main")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.81915206, 0.46984634, -0.32898995, 0, 0.57357645, 0.81915206, 0.57357645, -0.6710101, 0.46984634, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_max_distance = 300.0
+
+[node name="Level" type="Node3D" parent="."]
+script = ExtResource("1_level")
+
+[node name="HUD" type="CanvasLayer" parent="." node_paths=PackedStringArray("level")]
+script = ExtResource("3_hud")
+level = NodePath("../Level")
+
+[node name="DebugMap" type="Control" parent="HUD" node_paths=PackedStringArray("level")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 316.0
+offset_bottom = 316.0
+clip_contents = true
+mouse_filter = 2
+script = ExtResource("2_map")
+level = NodePath("../../Level")
+
+[node name="Stats" type="VBoxContainer" parent="HUD"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -376.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = 72.0
+grow_horizontal = 0
+mouse_filter = 2
+
+[node name="RoomLabel" type="Label" parent="HUD/Stats"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0.85)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 40
+text = "Room 0 / 20"
+horizontal_alignment = 2
