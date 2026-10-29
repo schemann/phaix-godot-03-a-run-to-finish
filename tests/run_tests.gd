@@ -1255,7 +1255,7 @@ func test_states(step: String) -> Array[String]:
 	_expect(failures, changes == [STATE_RUNNING, STATE_FINISHED], "state changes %s, expected [RUNNING, FINISHED]" % [changes])
 	_expect(failures, level.current == SHORT_GOAL, "finished in room %d, expected %d" % [level.current, SHORT_GOAL])
 
-	# The player stops: frozen, no velocity, and nothing a person can press moves it or turns it.
+	# The player stops: frozen, no velocity, and nothing the player can press moves it or turns it.
 	await _wait_physics(20)
 	_expect(failures, player.get("frozen") == true, "the player is not frozen after the finish")
 	_expect(failures, player.velocity == Vector3.ZERO, "the player moves with %s after the finish" % player.velocity)
@@ -1844,7 +1844,7 @@ func test_full_run() -> Array[String]:
 	_expect(failures, changes == [STATE_RUNNING, STATE_FINISHED], "state changes %s" % [changes])
 	_expect(failures, level.current == 20 and level.chain.goal_index == 20 and level.chain.plans.size() == 21, "finished in room %d with %d plans (goal_index %d)" % [level.current, level.chain.plans.size(), level.chain.goal_index])
 	var run_time: float = level.run_time
-	# 20 rooms of 10 to 18 m at 5 m/s: well under two minutes for the autopilot, a person takes longer.
+	# 20 rooms of 10 to 18 m at 5 m/s: well under two minutes for the autopilot, playing by hand takes longer.
 	_expect(failures, run_time > 30.0 and run_time < 120.0, "the run took %.1f s" % run_time)
 	print("        full run, seed 42: %.2f s of game time (%d physics ticks), %.1f s of wall time at %dx" % [run_time, roundi(run_time * 60.0), wall, SPEED_UP])
 

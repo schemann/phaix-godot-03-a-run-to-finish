@@ -14,7 +14,7 @@ that step. The project's main scene is the final step.
 
 | Folder | Part of the video |
 |---|---|
-| `steps/step_00_start` | Starting point (the final state of the previous tutorial) |
+| `steps/step_00_start` | Starting point (the final state of tutorial 01) |
 | `steps/step_01_room_counter` | Step 1 - A room counter |
 | `steps/step_02_goal_room` | Step 2 - The goal room |
 | `steps/step_03_game_states` | Step 3 - Game states |
